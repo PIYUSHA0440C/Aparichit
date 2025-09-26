@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aparichit</title>
+    <link rel="icon" href="Images/Icon.jpg">
+    <link rel="stylesheet" href="Home Page.css">
+    <style>
+        #pageContent {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.6s ease-in-out, visibility 0.6s ease-in-out;
+        }
+
+        #startContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        #startButton {
+            font-size: 1.5rem;
+            padding: 1rem 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: black;
+            color: #ff4c4c;
+            border: 3px solid #ff4c4c;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        #startButton:hover {
+            background-color: #ff4c4c;
+            color: black;
+            box-shadow: 0 0 15px #ff4c4c;
+            transform: scale(1.05);
+        }
+
+        #pageContent.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .box-1 a button {
+            font-size: 1.2rem;
+            padding: 0.8rem 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            background-color: black;
+            color: #ff4c4c;
+            border: 3px solid #ff4c4c;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .box-1 a button:hover {
+            background-color: #ff4c4c;
+            color: black;
+            box-shadow: 0 0 12px #ff4c4c;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>अपरिचित</h1>
+
+    <div id="startContainer">
+        <button id="startButton">Enter</button>
+    </div>
+
+    <div id="pageContent">
+        <br>
+        <hr>
+        <br>
+        <div class="box">
+            <div class="box-1">
+                <p class="intro">
+                    कलयुग अपने अंतिम चरण पर पहुँच चुका है। <br><br>
+                    पाप का घड़ा भर चुका है। <br><br>
+                    सबको अपने पापों का प्रायश्चित करवाने अपरिचित आ रहा है।
+                </p>
+                <br>
+                <p style="color: yellow; font-weight: bold; margin-bottom: 0.5rem;">
+                    कृपया शिकायत करने से पहले वीडियो खत्म होने दें।
+                </p>
+                <a href="Request.html">
+                    <button>COMPLAIN</button>
+                </a>
+            </div>
+            <div class="box-2">
+                <video id="mainVideo" src="Videos/Video 1.mp4" playsinline loop></video>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extra audio file -->
+    <audio id="extraAudio" src="Audios/Theme Song.mp3" loop></audio>
+
+    <script src="Home Page.js"></script>
+    <script>
+        const startButton = document.getElementById('startButton');
+        const startContainer = document.getElementById('startContainer');
+        const pageContent = document.getElementById('pageContent');
+        const video = document.getElementById('mainVideo');
+        const extraAudio = document.getElementById('extraAudio');
+
+        startButton.addEventListener('click', () => {
+            // Hide Enter button
+            startContainer.style.display = 'none';
+
+            // Smoothly show page content
+            pageContent.classList.add('show');
+
+            // Play video unmuted at full volume
+            video.currentTime = 0;
+            video.muted = false;
+            video.volume = 1.0; // full volume
+            video.play().catch(() => console.log('Video playback failed'));
+
+            // Play extra audio at lower volume
+            extraAudio.currentTime = 0;
+            extraAudio.volume = 0.4; // 20% volume
+            extraAudio.play().catch(() => console.log('Extra audio playback blocked'));
+        });
+    </script>
+
+</body>
+</html>

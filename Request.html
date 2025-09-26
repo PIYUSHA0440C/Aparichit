@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Aparichit</title>
+    <link rel="icon" href="Images/Icon.jpg">
+    <link rel="stylesheet" href="Request.css">
+    <style>
+        #confirmationBox {
+            display: none;
+            width: 100%;
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        #confirmationVideo {
+            width: 100%;
+            height: auto;
+            margin-top: 1rem;
+            border: 2px solid red;
+            border-radius: 10px;
+            box-shadow: 0 0 20px red;
+            transition: all 0.3s ease-in-out;
+        }
+
+        #confirmationContent {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff4c4c;
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 1rem;
+            border-radius: 10px;
+            line-height: 1.6rem;
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out 0.1s;
+        }
+
+        #submit {
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 0.8rem 2rem;
+            cursor: pointer;
+            background-color: black;
+            color: #ff4c4c;
+            border: 2px solid #ff4c4c;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        #submit:hover {
+            background-color: #ff4c4c;
+            color: black;
+            box-shadow: 0 0 15px #ff4c4c;
+        }
+
+        #requestBox p, #confirmationBox p {
+            margin: 1rem 0;
+        }
+
+        @media(max-width: 768px){
+            #confirmationVideo {
+                width: 90%;
+            }
+            #submit {
+                width: 70%;
+                font-size: 1rem;
+            }
+        }
+
+        #requestBox {
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="requestBox">
+        <h1>गलती की सजा - मौत!</h1>
+        <p>गरुड़ पुराण के हिसाब से सबको सजा मिलेगी।</p>
+        <hr>
+        <p>अपनी समस्या लिखो। अपरिचित इन्साफ करेगा।</p>
+        <textarea id="input"></textarea>
+        <button id="submit">SUBMIT</button>
+    </div>
+
+    <div class="box" id="confirmationBox">
+        <video id="confirmationVideo" src="Videos/Video 2.mp4" playsinline loop></video>
+        <div id="confirmationContent"></div>
+    </div>
+
+    <!-- External audio -->
+    <audio id="externalAudio" src="Audios/Theme Song.mp3" loop></audio>
+
+    <script>
+        const submitButton = document.getElementById('submit');
+        const input = document.getElementById('input');
+        const requestBox = document.getElementById('requestBox');
+        const confirmationBox = document.getElementById('confirmationBox');
+        const confirmationVideo = document.getElementById('confirmationVideo');
+        const confirmationContent = document.getElementById('confirmationContent');
+        const externalAudio = document.getElementById('externalAudio');
+
+        submitButton.addEventListener('click', () => {
+            const userInput = input.value.trim();
+            if(userInput === ""){
+                alert("कृपया कुछ लिखें।");
+                return;
+            }
+
+            // Hide request box
+            requestBox.style.opacity = 0;
+            setTimeout(() => {
+                requestBox.style.display = 'none';
+
+                // Show confirmation box
+                confirmationBox.style.display = 'block';
+                setTimeout(() => {
+                    confirmationBox.style.opacity = 1;
+                    confirmationContent.style.opacity = 1;
+                }, 50);
+
+                // Set confirmation text
+                confirmationContent.textContent = "आपका संदेश: " + userInput;
+
+                // Play video with full audio
+                confirmationVideo.currentTime = 0;
+                confirmationVideo.muted = false;
+                confirmationVideo.volume = 1.0;
+                confirmationVideo.play().catch(() => console.log("Video playback failed"));
+
+                // Play external audio at low volume
+                externalAudio.currentTime = 0;
+                externalAudio.volume = 0.4; // 20% volume
+                externalAudio.play().catch(() => console.log("External audio playback blocked"));
+            }, 300);
+        });
+    </script>
+
+</body>
+</html>
